@@ -6,7 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Table(name = "pacientes")
 @Entity
 public class Patient {
@@ -23,32 +27,24 @@ public class Patient {
     @Column(name = "Sexo")
     private String sex;
 
-    public long getId() {
-        return id;
+    public Patient() {
     }
 
-    public void setId(long id) {
+    public Patient(Long id, String name, String sex) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public Object[] getPatientData() {
+        return new Object[]{
+            this.id,
+            this.name,
+            this.sex,};
     }
 
     @Override
     public String toString() {
-        return this.name; //consulta o banco
+        return this.name;
     }
 }
