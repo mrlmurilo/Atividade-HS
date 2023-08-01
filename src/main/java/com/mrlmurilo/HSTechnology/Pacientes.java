@@ -1,30 +1,24 @@
 package com.mrlmurilo.HSTechnology;
 
-import com.mrlmurilo.HSTechnology.repositories.PatientsRepo;
+import com.mrlmurilo.HSTechnology.models.Patient;
 import java.awt.EventQueue;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import com.mrlmurilo.HSTechnology.repositories.PatientsRepository;
 
 @SpringBootApplication
 public class Pacientes extends javax.swing.JFrame {
 
-    private final PatientsRepo repository;
+    private final PatientsRepository repository;
 
-    public Pacientes(PatientsRepo repository) {
+    public Pacientes(PatientsRepository repository) {
         initComponents();
 
         this.repository = repository;
-        var pacientes = repository.findAll();
-        var table = (DefaultTableModel) tablePatients.getModel();
-        pacientes.forEach(paciente -> {
-            table.addRow(new Object[]{
-                paciente.getId(),
-                paciente.getName(),
-                paciente.getSex()
-            });
-        });
 
+        setPatients(repository.findAll());
     }
 
     /**
@@ -38,7 +32,7 @@ public class Pacientes extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablePatients = new javax.swing.JTable();
-        jTxtFPaciente = new javax.swing.JTextField();
+        patientName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,9 +47,9 @@ public class Pacientes extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablePatients);
 
-        jTxtFPaciente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTxtFPacienteActionPerformed(evt);
+        patientName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                patientNameKeyReleased(evt);
             }
         });
 
@@ -69,7 +63,7 @@ public class Pacientes extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jTxtFPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(patientName, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -82,7 +76,7 @@ public class Pacientes extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTxtFPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(patientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
@@ -91,9 +85,12 @@ public class Pacientes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTxtFPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtFPacienteActionPerformed
+    private void patientNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_patientNameKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtFPacienteActionPerformed
+        var search = patientName.getText();
+        var result = this.repository.findByNameContainingIgnoreCase(search);
+        setPatients(result);
+    }//GEN-LAST:event_patientNameKeyReleased
 
     /**
      * @param args the command line arguments
@@ -132,10 +129,16 @@ public class Pacientes extends javax.swing.JFrame {
         });
     }
 
+    public void setPatients(List<Patient> patients) {
+        var table = (DefaultTableModel) this.tablePatients.getModel();
+        table.setRowCount(0);
+        patients.forEach(patient -> table.addRow(patient.getPatientData()));
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTxtFPaciente;
+    private javax.swing.JTextField patientName;
     private javax.swing.JTable tablePatients;
     // End of variables declaration//GEN-END:variables
 }
