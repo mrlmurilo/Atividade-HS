@@ -5,5 +5,5 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PatientsRepository extends JpaRepository<Patient, Long> {
- List<Patient> findByNameContainingIgnoreCase(String name);
+   List<Patient> findByNameContainingIgnoreCase(String name);
 }
