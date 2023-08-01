@@ -7,17 +7,22 @@ import javax.swing.table.DefaultTableModel;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import com.mrlmurilo.HSTechnology.repositories.PatientsRepository;
+import javax.swing.ImageIcon;
 
 @SpringBootApplication
-public class Pacientes extends javax.swing.JFrame {
+public class TelaPesquisaPacientes extends javax.swing.JFrame {
 
     private final PatientsRepository repository;
 
-    public Pacientes(PatientsRepository repository) {
+    public TelaPesquisaPacientes(PatientsRepository repository) {
         initComponents();
 
-        this.repository = repository;
+        setLocationRelativeTo(null);
+        setVisible(true);
+        setTitle("Tela de pesquisa");
+        setResizable(false);
 
+        this.repository = repository;
         setPatients(repository.findAll());
     }
 
@@ -96,7 +101,7 @@ public class Pacientes extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        var ctx = new SpringApplicationBuilder(Pacientes.class)
+        var ctx = new SpringApplicationBuilder(TelaPesquisaPacientes.class)
                 .headless(false).run(args);
 
         /* Set the Nimbus look and feel */
@@ -112,19 +117,20 @@ public class Pacientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Pacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPesquisaPacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Pacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPesquisaPacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Pacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPesquisaPacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Pacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPesquisaPacientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         EventQueue.invokeLater(() -> {
-            var ex = ctx.getBean(Pacientes.class);
+            var ex = ctx.getBean(TelaPesquisaPacientes.class);
             ex.setVisible(true);
         });
     }
