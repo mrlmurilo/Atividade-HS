@@ -31,4 +31,9 @@ public class Login {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    @Override
+    public String toString() {
+        return this.email; //consulta o banco
+    }
 }
