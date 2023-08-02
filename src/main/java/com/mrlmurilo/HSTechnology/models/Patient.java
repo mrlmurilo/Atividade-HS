@@ -14,12 +14,11 @@ import lombok.Setter;
 @Table(name = "pacientes")
 @Entity
 public class Patient {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "Paciente_ID")
-    private Long id;
+    private Long id_patient;
 
     @Column(name = "Nome")
     private String name;
@@ -31,14 +30,14 @@ public class Patient {
     }
 
     public Patient(Long id, String name, String sex) {
-        this.id = id;
+        this.id_patient = id;
         this.name = name;
         this.sex = sex;
     }
 
     public Object[] getPatientData() {
         return new Object[]{
-            this.id,
+            this.id_patient,
             this.name,
             this.sex,};
     }
