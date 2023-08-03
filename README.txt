@@ -1,8 +1,12 @@
-Navegue até a pasta src/main/resources
+-Realizado o projeto de busca na tabela "pacientes" no db fornecido pela HSTechonology
+-Utilizado Hybernate
 
-Abre o arquivo application.properties
--Neste arquivo você deverá seguir as intruções anotadas no mesmo para conseguir executar o sistema
+Existe uma branch do projeto que iria adicionar a função de busca de exames atráves do ID do paciente selecionado na tabela, porém a mesma não chegou ser finalizada.
 
-Abra o projeto em alguma IDE (foi utilizada a IDE apache netbeans 18)
 
-execute o projeto
+Para que o programa execute siga estes passsos:
+
+-Navegue até a pasta src/main/resources
+-Abra o arquivo application.properties
+-Abra o projeto em alguma IDE (foi utilizada a IDE apache netbeans 18)
+-Execute o projeto
