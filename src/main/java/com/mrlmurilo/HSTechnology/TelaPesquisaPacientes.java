@@ -1,6 +1,7 @@
 package com.mrlmurilo.HSTechnology;
 
 import com.mrlmurilo.HSTechnology.models.Patient;
+import com.mrlmurilo.HSTechnology.repositories.ExamesRepository;
 import java.awt.EventQueue;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -11,7 +12,9 @@ import com.mrlmurilo.HSTechnology.repositories.PatientsRepository;
 @SpringBootApplication
 public class TelaPesquisaPacientes extends javax.swing.JFrame {
 
-    private final PatientsRepository repository;
+    private final PatientsRepository repositoryPatient;
+    private final ExamesRepository repositoryExames = null;
+    private Integer id;
 
     public TelaPesquisaPacientes(PatientsRepository repository) {
         initComponents();
@@ -21,7 +24,7 @@ public class TelaPesquisaPacientes extends javax.swing.JFrame {
         setTitle("Tela de pesquisa");
         setResizable(false);
 
-        this.repository = repository;
+        this.repositoryPatient = repository;
         setPatients(repository.findAll());
     }
 
@@ -38,7 +41,9 @@ public class TelaPesquisaPacientes extends javax.swing.JFrame {
         tablePatients = new javax.swing.JTable();
         patientName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtBusca = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,6 +55,11 @@ public class TelaPesquisaPacientes extends javax.swing.JFrame {
                 "ID", "Nome", "Sexo"
             }
         ));
+        tablePatients.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePatientsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablePatients);
 
         patientName.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -60,7 +70,14 @@ public class TelaPesquisaPacientes extends javax.swing.JFrame {
 
         jLabel1.setText("Nome Paciente:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Paciente", "Exame", " " }));
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Procurar exame");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,14 +90,24 @@ public class TelaPesquisaPacientes extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(patientName, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(107, 107, 107))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(patientName, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton1)
+                                    .addComponent(jLabel2))))
+                        .addGap(89, 89, 89))))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -88,12 +115,16 @@ public class TelaPesquisaPacientes extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(patientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(patientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -102,9 +133,20 @@ public class TelaPesquisaPacientes extends javax.swing.JFrame {
     private void patientNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_patientNameKeyReleased
         // TODO add your handling code here:
         var search = patientName.getText();
-        var result = this.repository.findByNameContainingIgnoreCase(search);
+        var result = this.repositoryPatient.findByNameContainingIgnoreCase(search);
         setPatients(result);
     }//GEN-LAST:event_patientNameKeyReleased
+
+    private void tablePatientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePatientsMouseClicked
+        // TODO add your handling code here:
+        int row = tablePatients.rowAtPoint(evt.getPoint());
+        id = Integer.valueOf((String) tablePatients.getValueAt(row, 0));
+        System.out.println(id);
+    }//GEN-LAST:event_tablePatientsMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //quando apertar o botão fazer a busca com o valor
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,10 +193,12 @@ public class TelaPesquisaPacientes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField patientName;
     private javax.swing.JTable tablePatients;
+    private javax.swing.JLabel txtBusca;
     // End of variables declaration//GEN-END:variables
 }

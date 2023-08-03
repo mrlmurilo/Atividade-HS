@@ -32,18 +32,29 @@ public class Exames {
 
     @Column(name = "ComentarioImpressao")
     private String comentario;
-    
+
     @OneToOne
     private Patient id_patient;
 
     public Exames() {
-        //hora tipo comentários comentarioImpressão
     }
 
     public Exames(LocalDateTime dateHoraExame, String tipoExame, String observacoes, String comentario, Patient id_patient) {
+        this.id_patient = id_patient;
         this.dataHoraExame = dataHoraExame;
         this.tipoExame = tipoExame;
         this.observacoes = observacoes;
         this.comentario = comentario;
+
+    }
+
+    public Object[] getPatientData() {
+        return new Object[]{
+            this.id_patient,
+            this.dataHoraExame,
+            this.tipoExame,
+            this.observacoes,
+            this.comentario
+        };
     }
 }

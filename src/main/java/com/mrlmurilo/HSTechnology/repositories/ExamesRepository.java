@@ -1,10 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package com.mrlmurilo.HSTechnology.repositories;
 
+import com.mrlmurilo.HSTechnology.models.Exames;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ExamesRepository {
-    
+public interface ExamesRepository extends JpaRepository<Exames, Long> {
+    List<Exames> findById_patientContaining(Long idPatient);
 }
